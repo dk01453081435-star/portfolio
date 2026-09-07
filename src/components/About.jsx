@@ -1,122 +1,122 @@
 import React from 'react';
-import { User, GraduationCap, MapPin, Target, Sparkles } from 'lucide-react';
+import { Code2, Compass, Cpu, Rocket, MapPin, Mail, Phone, ExternalLink } from 'lucide-react';
 import { portfolioData } from '../data/portfolio';
 
 const About = () => {
-  const { name, tagline, location, hometown, email, phone, avatar } = portfolioData.personal;
-  const education = portfolioData.education[0];
+  const { name, location, hometown, email, phone, college, bio, quickStats } = portfolioData.personal;
+
+  const pillars = [
+    {
+      icon: <Code2 size={22} className="text-primary-400" />,
+      title: "Algorithms & Logic",
+      description: "Practicing C++ and Data Structures & Algorithms to strengthen problem-solving foundations."
+    },
+    {
+      icon: <Compass size={22} className="text-indigo-400" />,
+      title: "Frontend Craft",
+      description: "Building responsive, modern, and accessible web experiences using React and Tailwind CSS."
+    },
+    {
+      icon: <Cpu size={22} className="text-cyan-400" />,
+      title: "AI & Machine Learning",
+      description: "Exploring text processing, embeddings, and intelligent models for practical problem solving."
+    },
+    {
+      icon: <Rocket size={22} className="text-amber-400" />,
+      title: "Entrepreneurial Spirit",
+      description: "Driven by the ambition to engineer impactful products and launch innovative tech ventures."
+    }
+  ];
 
   return (
-    <section id="about" className="py-24 bg-slate-900/40 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section id="about" className="py-24 bg-slate-900/30 border-t border-slate-900/80 relative">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <div className="text-left max-w-2xl mb-14">
+          <p className="text-primary-400 text-xs sm:text-sm font-semibold uppercase tracking-wider mb-2 font-mono">
+            Get To Know Me
+          </p>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-            About <span className="text-primary-400">Me</span>
+            About Me &amp; My Journey
           </h2>
-          <div className="w-16 h-1 bg-gradient-to-r from-primary-500 to-indigo-500 mx-auto mt-4 rounded-full" />
+          <div className="w-12 h-1 bg-primary-500 mt-3 rounded-full" />
         </div>
 
-        {/* Content Grid */}
+        {/* Two-column layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           
-          {/* Left Column: Story & Vision */}
-          <div className="lg:col-span-7 space-y-6">
-            <div className="flex items-center gap-2 text-primary-400 font-semibold text-sm uppercase tracking-wider">
-              <Sparkles size={16} />
-              Professional Background
-            </div>
-            
-            <p className="text-lg text-slate-300 leading-relaxed font-light">
-              Hi, I'm <strong className="text-white font-semibold">{name}</strong>. {tagline}
-            </p>
-
-            <div className="border-l-4 border-primary-500 pl-4 py-1 bg-slate-900/30 rounded-r-lg">
-              <p className="italic text-slate-400 text-sm">
-                "Developing concept-driven AI systems and high-quality frontend experiences with C++, React, and Tailwind CSS."
+          {/* Left: Authentic narrative */}
+          <div className="lg:col-span-7 space-y-6 text-slate-300 text-base sm:text-lg leading-relaxed">
+            {bio.map((paragraph, idx) => (
+              <p key={idx} className="text-slate-300 font-normal">
+                {paragraph}
               </p>
+            ))}
+
+            {/* Quote / Philosophy */}
+            <div className="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 text-slate-400 text-sm italic leading-relaxed">
+              "I believe great engineering comes from understanding fundamentals deeply — whether that’s memory and pointers in C++, reactive state in React, or training workflows in machine learning."
             </div>
 
-            {/* Core Values / Interest Blocks */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
-              <div className="p-4 rounded-xl bg-slate-900/50 border border-slate-800 hover:border-slate-700/80 transition-all duration-300">
-                <div className="w-10 h-10 rounded-lg bg-primary-500/10 flex items-center justify-center text-primary-400 mb-3">
-                  <GraduationCap size={20} />
+            {/* Fast fact badges */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+              {quickStats.map((stat, i) => (
+                <div key={i} className="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800/80">
+                  <p className="text-[11px] uppercase tracking-wider text-slate-500 font-mono mb-1">
+                    {stat.label}
+                  </p>
+                  <p className="text-xs sm:text-sm font-semibold text-slate-200">
+                    {stat.value}
+                  </p>
                 </div>
-                <h3 className="text-white font-semibold mb-1 text-sm sm:text-base">Current Studies</h3>
-                <p className="text-slate-400 text-xs sm:text-sm">
-                  Pursuing B.Tech CSE at {education.college}.
-                </p>
-              </div>
-
-              <div className="p-4 rounded-xl bg-slate-900/50 border border-slate-800 hover:border-slate-700/80 transition-all duration-300">
-                <div className="w-10 h-10 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-400 mb-3">
-                  <Target size={20} />
-                </div>
-                <h3 className="text-white font-semibold mb-1 text-sm sm:text-base">Long-Term Goal</h3>
-                <p className="text-slate-400 text-xs sm:text-sm">
-                  Striving to become a professional AI Engineer and entrepreneur.
-                </p>
-              </div>
+              ))}
             </div>
           </div>
 
-          {/* Right Column: Personal Details Card */}
-          <div className="lg:col-span-5">
-            <div className="bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 p-6 sm:p-8 rounded-2xl shadow-xl">
-              <div className="flex items-center gap-3 border-b border-slate-800 pb-5 mb-5">
-                {avatar ? (
-                  <img
-                    src={avatar}
-                    alt={name}
-                    className="w-12 h-12 rounded-full object-cover border border-slate-800 shadow-md"
-                  />
-                ) : (
-                  <div className="w-12 h-12 rounded-full bg-slate-800/80 flex items-center justify-center text-primary-400">
-                    <User size={22} />
-                  </div>
-                )}
-                <div>
-                  <h3 className="text-white font-bold text-lg">Personal Details</h3>
-                  <p className="text-slate-500 text-xs uppercase tracking-wider">Fast Facts</p>
-                </div>
-              </div>
+          {/* Right: Pillars & Values */}
+          <div className="lg:col-span-5 space-y-4">
+            <h3 className="text-white text-base font-semibold uppercase tracking-wider font-mono text-xs text-slate-400 mb-2">
+              What I Care About
+            </h3>
 
-              {/* Details List */}
-              <div className="space-y-4 text-sm">
-                <div className="flex justify-between items-center py-2 border-b border-slate-900">
-                  <span className="text-slate-400">Full Name</span>
-                  <span className="text-white font-medium">{name}</span>
+            <div className="space-y-3">
+              {pillars.map((pillar, idx) => (
+                <div
+                  key={idx}
+                  className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800/80 hover:border-slate-700 transition-colors duration-200 flex items-start gap-3.5"
+                >
+                  <div className="p-2.5 rounded-xl bg-slate-950 border border-slate-800 shrink-0">
+                    {pillar.icon}
+                  </div>
+                  <div>
+                    <h4 className="text-white font-semibold text-sm sm:text-base mb-1">
+                      {pillar.title}
+                    </h4>
+                    <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
+                      {pillar.description}
+                    </p>
+                  </div>
                 </div>
-                <div className="flex justify-between items-center py-2 border-b border-slate-900">
-                  <span className="text-slate-400">Current Location</span>
-                  <span className="text-white font-medium flex items-center gap-1">
-                    <MapPin size={14} className="text-primary-500" />
-                    {location}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center py-2 border-b border-slate-900">
-                  <span className="text-slate-400">Hometown</span>
-                  <span className="text-white font-medium">{hometown}</span>
-                </div>
-                <div className="flex justify-between items-center py-2 border-b border-slate-900">
-                  <span className="text-slate-400">Email</span>
-                  <a href={`mailto:${email}`} className="text-primary-400 hover:text-primary-300 font-medium transition-colors">
-                    {email}
-                  </a>
-                </div>
-                <div className="flex justify-between items-center py-2 border-b border-slate-900">
-                  <span className="text-slate-400">Phone</span>
-                  <a href={`tel:${phone}`} className="text-white font-medium hover:text-primary-400 transition-colors">
-                    +91 {phone}
-                  </a>
-                </div>
-                <div className="flex justify-between items-center py-2">
-                  <span className="text-slate-400">College</span>
-                  <span className="text-white font-medium">{education.college}</span>
-                </div>
+              ))}
+            </div>
+
+            {/* Direct Connect Strip */}
+            <div className="pt-2">
+              <div className="p-4 rounded-2xl bg-gradient-to-r from-primary-950/40 to-indigo-950/40 border border-primary-900/30 flex items-center justify-between text-xs text-slate-300">
+                <span className="flex items-center gap-1.5">
+                  <Mail size={14} className="text-primary-400" />
+                  {email}
+                </span>
+                <a
+                  href="#contact"
+                  className="text-primary-400 hover:text-primary-300 font-medium flex items-center gap-1"
+                >
+                  Say Hello <ExternalLink size={12} />
+                </a>
               </div>
             </div>
+
           </div>
 
         </div>

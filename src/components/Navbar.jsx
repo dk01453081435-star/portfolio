@@ -1,26 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, MapPin, Terminal } from 'lucide-react';
+import { Menu, X, MapPin, Sparkles } from 'lucide-react';
 import { portfolioData } from '../data/portfolio';
 
 const Navbar = () => {
-  const { name, hometown } = portfolioData.personal;
+  const { name, hometown, status } = portfolioData.personal;
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      setScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const navLinks = [
-    { label: 'Home', href: '#home' },
     { label: 'About', href: '#about' },
     { label: 'Skills', href: '#skills' },
     { label: 'Projects', href: '#projects' },
@@ -29,96 +24,103 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-      scrolled 
-        ? 'bg-slate-950/80 backdrop-blur-md border-b border-slate-900 py-3 shadow-lg' 
-        : 'bg-transparent py-5'
-    }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-12">
-          {/* Logo / Brand Name */}
-          <a href="#home" className="flex items-center space-x-2 group">
-            <div className="w-9 h-9 rounded-lg bg-gradient-to-tr from-primary-600 to-indigo-500 flex items-center justify-center text-white shadow-md shadow-primary-500/20 group-hover:scale-105 transition-transform duration-300">
-              <Terminal size={18} />
+    <header
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+        scrolled
+          ? 'bg-slate-950/85 backdrop-blur-md border-b border-slate-800/80 py-3 shadow-lg shadow-black/20'
+          : 'bg-transparent py-4 sm:py-5'
+      }`}
+    >
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-11">
+          {/* Logo / Personal identity */}
+          <a href="#home" className="flex items-center gap-3 group">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-primary-600 via-indigo-600 to-indigo-500 flex items-center justify-center text-white font-bold text-base shadow-sm group-hover:scale-105 transition-transform duration-300">
+              DK
             </div>
             <div className="flex flex-col">
-              <span className="text-white font-extrabold text-lg tracking-tight uppercase group-hover:text-primary-400 transition-colors">
+              <span className="text-white font-bold text-base sm:text-lg tracking-tight group-hover:text-primary-400 transition-colors">
                 {name}
               </span>
-              {/* Hometown shown under name / side of name in Navbar */}
-              <span className="text-slate-400 text-[10px] flex items-center gap-0.5">
-                <MapPin size={10} className="text-primary-500" />
+              <span className="text-slate-400 text-[11px] flex items-center gap-1 font-normal">
+                <MapPin size={11} className="text-primary-400" />
                 {hometown}
               </span>
             </div>
           </a>
 
-          {/* Desktop Nav Items */}
-          <div className="hidden md:flex items-center space-x-8">
-            <div className="flex space-x-1">
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex items-center gap-7">
+            <div className="flex items-center gap-1 bg-slate-900/60 border border-slate-800/70 px-3 py-1.5 rounded-full">
               {navLinks.map((link) => (
                 <a
                   key={link.label}
                   href={link.href}
-                  className="px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-900/50 transition-all duration-200"
+                  className="px-3 py-1 text-sm font-medium text-slate-300 hover:text-white rounded-full transition-colors duration-200"
                 >
                   {link.label}
                 </a>
               ))}
             </div>
-            
-            {/* Quick Contact Badge / CTA */}
+
+            {/* Status indicator button */}
             <a
               href="#contact"
-              className="bg-primary-600/10 hover:bg-primary-600 border border-primary-500/30 hover:border-primary-500 text-primary-400 hover:text-white px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider transition-all duration-300 uppercase"
+              className="inline-flex items-center gap-2 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-200"
             >
-              Let's Talk
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              {status}
             </a>
-          </div>
+          </nav>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile hamburger */}
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-slate-400 hover:text-white hover:bg-slate-900 focus:outline-none transition-colors"
-              aria-label="Toggle menu"
+              className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 border border-transparent hover:border-slate-800 transition-colors"
+              aria-label="Toggle navigation"
             >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
+              {isOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu Panel */}
-      <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-        isOpen ? 'max-h-screen border-b border-slate-900 bg-slate-950/95 backdrop-blur-lg' : 'max-h-0'
-      }`}>
-        <div className="px-2 pt-2 pb-4 space-y-1 sm:px-3">
+      {/* Mobile Drawer */}
+      <div
+        className={`md:hidden transition-all duration-300 ease-in-out overflow-hidden ${
+          isOpen
+            ? 'max-h-96 border-b border-slate-800/80 bg-slate-950/95 backdrop-blur-xl'
+            : 'max-h-0'
+        }`}
+      >
+        <div className="px-4 pt-3 pb-5 space-y-2">
           {navLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
               onClick={() => setIsOpen(false)}
-              className="block px-3 py-3 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-900 transition-colors"
+              className="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-slate-900/80 transition-colors"
             >
               {link.label}
             </a>
           ))}
-          <div className="pt-4 pb-2 px-3 border-t border-slate-900 flex justify-between items-center text-xs text-slate-400">
-            <span className="flex items-center gap-1">
-              <MapPin size={12} className="text-primary-500" /> {hometown}
+          <div className="pt-3 border-t border-slate-800/70 flex items-center justify-between">
+            <span className="text-xs text-slate-400 flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-emerald-400" />
+              {status}
             </span>
             <a
               href="#contact"
               onClick={() => setIsOpen(false)}
-              className="bg-primary-600 text-white px-4 py-2 rounded-lg font-semibold uppercase tracking-wider"
+              className="bg-primary-600 hover:bg-primary-500 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors"
             >
-              Contact Me
+              Contact
             </a>
           </div>
         </div>
       </div>
-    </nav>
+    </header>
   );
 };
 

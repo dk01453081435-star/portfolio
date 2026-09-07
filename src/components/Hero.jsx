@@ -1,118 +1,158 @@
-import React, { useState, useEffect } from 'react';
-import { Github, Linkedin, ArrowRight, Download, Mail } from 'lucide-react';
+import React from 'react';
+import { Github, Linkedin, ArrowUpRight, Mail, FileText, MapPin, GraduationCap } from 'lucide-react';
 import { portfolioData } from '../data/portfolio';
 
 const Hero = () => {
-  const { name, roles, tagline, github, linkedin, resumeUrl, avatar } = portfolioData.personal;
-  const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentRoleIndex((prevIndex) => (prevIndex + 1) % roles.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [roles]);
+  const { name, headline, location, hometown, college, github, linkedin, resumeUrl, avatar, email } =
+    portfolioData.personal;
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden bg-slate-950">
-      {/* Glow Orbs */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-primary-600/20 glow-orb" />
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-indigo-500/10 glow-orb" />
-      
-      {/* Background Grid Pattern */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-30" />
+    <section
+      id="home"
+      className="relative min-h-[92vh] flex items-center justify-center pt-28 pb-16 overflow-hidden bg-slate-950"
+    >
+      {/* Subtle ambient lighting - tasteful, not overblown */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-primary-900/15 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute inset-0 bg-grid-pattern opacity-20 pointer-events-none" />
 
-      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        {/* Intro Tag */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-primary-500/30 bg-primary-500/10 text-primary-300 text-xs sm:text-sm font-medium tracking-wide mb-6 animate-pulse-slow">
-          <span className="w-2 h-2 rounded-full bg-primary-400" />
-          Welcome to my Developer Portfolio
-        </div>
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+          
+          {/* Left Column: Intro & Headline */}
+          <div className="lg:col-span-7 text-left space-y-6">
+            
+            {/* Quick status pill */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/90 border border-slate-800 text-slate-300 text-xs font-medium">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span>Computer Science Undergraduate</span>
+              <span className="text-slate-600">•</span>
+              <span className="text-slate-400">{college}</span>
+            </div>
 
-        {/* Profile Image */}
-        {avatar && (
-          <div className="mb-6 relative inline-block">
-            <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-primary-500 to-indigo-500 blur-md opacity-50 animate-pulse-slow" />
-            <img
-              src={avatar}
-              alt={name}
-              className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-full object-cover border-4 border-slate-900 shadow-2xl"
-            />
+            {/* Main Headline */}
+            <div className="space-y-3">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
+                Hey, I'm <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary-400 via-indigo-300 to-indigo-400">{name}</span>.
+              </h1>
+              <p className="text-xl sm:text-2xl text-slate-300 font-medium leading-snug">
+                {headline}
+              </p>
+            </div>
+
+            {/* Human Intro Paragraph */}
+            <p className="text-slate-400 text-base sm:text-lg leading-relaxed max-w-xl">
+              I’m pursuing B.Tech in CSE at SVIET (Banur, Punjab), originally from Koderma, Jharkhand. 
+              I focus on core problem-solving with C++ and DSA, build responsive user interfaces with React and Tailwind CSS, and actively explore machine learning concepts.
+            </p>
+
+            {/* Location & Quick Context */}
+            <div className="flex flex-wrap items-center gap-4 text-xs text-slate-400 pt-1">
+              <span className="flex items-center gap-1.5 bg-slate-900/60 px-3 py-1.5 rounded-lg border border-slate-800/80">
+                <MapPin size={13} className="text-primary-400" />
+                {location} &amp; {hometown}
+              </span>
+              <span className="flex items-center gap-1.5 bg-slate-900/60 px-3 py-1.5 rounded-lg border border-slate-800/80">
+                <GraduationCap size={13} className="text-indigo-400" />
+                B.Tech CSE Student
+              </span>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-wrap items-center gap-3 pt-4">
+              <a
+                href="#projects"
+                className="inline-flex items-center gap-2 bg-primary-600 hover:bg-primary-500 text-white font-medium px-6 py-3 rounded-xl shadow-md shadow-primary-600/20 hover:shadow-primary-500/30 transition-all duration-200"
+              >
+                View My Projects
+                <ArrowUpRight size={16} />
+              </a>
+
+              <a
+                href="#contact"
+                className="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-slate-200 font-medium px-5 py-3 rounded-xl transition-all duration-200"
+              >
+                <Mail size={16} />
+                Get in Touch
+              </a>
+
+              {resumeUrl && (
+                <a
+                  href={resumeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-slate-950 hover:bg-slate-900 border border-slate-800/80 text-slate-400 hover:text-slate-200 font-medium px-4 py-3 rounded-xl transition-all duration-200"
+                >
+                  <FileText size={16} />
+                  Resume
+                </a>
+              )}
+            </div>
+
+            {/* Social Links */}
+            <div className="flex items-center gap-5 pt-2 text-slate-500">
+              <span className="text-xs uppercase tracking-wider text-slate-500 font-mono">Connect</span>
+              <a
+                href={github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-slate-400 hover:text-white transition-colors duration-200 flex items-center gap-1.5 text-sm"
+              >
+                <Github size={18} />
+                <span>GitHub</span>
+              </a>
+              <a
+                href={linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-slate-400 hover:text-white transition-colors duration-200 flex items-center gap-1.5 text-sm"
+              >
+                <Linkedin size={18} />
+                <span>LinkedIn</span>
+              </a>
+            </div>
+
           </div>
-        )}
 
-        {/* Heading */}
-        <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white mb-6">
-          Hi, I'm <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary-400 via-indigo-300 to-indigo-500">{name}</span>
-        </h1>
+          {/* Right Column: Natural Photo Presentation */}
+          <div className="lg:col-span-5 flex justify-center lg:justify-end">
+            <div className="relative group">
+              
+              {/* Subtle back card glow */}
+              <div className="absolute -inset-1 bg-gradient-to-r from-primary-600/30 to-indigo-600/30 rounded-3xl blur-lg opacity-70 group-hover:opacity-100 transition duration-500" />
+              
+              {/* Card container */}
+              <div className="relative rounded-3xl bg-slate-900/90 border border-slate-800 p-3.5 shadow-2xl overflow-hidden max-w-sm">
+                <div className="aspect-square w-full rounded-2xl overflow-hidden bg-slate-950 relative">
+                  {avatar ? (
+                    <img
+                      src={avatar}
+                      alt={name}
+                      className="w-full h-full object-cover object-center group-hover:scale-102 transition-transform duration-500"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-slate-600">
+                      No Photo
+                    </div>
+                  )}
+                </div>
 
-        {/* Dynamic Role / Subtitle */}
-        <div className="h-10 sm:h-12 flex items-center justify-center mb-8">
-          <span className="text-xl sm:text-3xl font-semibold text-slate-300">
-            I am a{' '}
-            <span className="text-primary-400 border-r-2 border-primary-400 animate-pulse px-1">
-              {roles[currentRoleIndex]}
-            </span>
-          </span>
+                {/* Micro caption on the photo card */}
+                <div className="pt-3.5 pb-1 px-2 flex items-center justify-between">
+                  <div>
+                    <p className="text-white text-sm font-semibold">{name}</p>
+                    <p className="text-slate-400 text-xs">CSE Undergraduate • Banur</p>
+                  </div>
+                  <span className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                    Available
+                  </span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
         </div>
-
-        {/* Tagline */}
-        <p className="max-w-2xl mx-auto text-base sm:text-lg text-slate-400 leading-relaxed mb-10">
-          {tagline}
-        </p>
-
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-          <a
-            href="#projects"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-primary-600 to-indigo-600 hover:from-primary-500 hover:to-indigo-500 text-white font-semibold px-8 py-3.5 rounded-xl shadow-lg shadow-primary-600/20 hover:shadow-primary-500/30 transition-all duration-300 hover:-translate-y-0.5"
-          >
-            View Projects
-            <ArrowRight size={18} />
-          </a>
-          <a
-            href="#contact"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-slate-200 font-semibold px-8 py-3.5 rounded-xl transition-all duration-300 hover:-translate-y-0.5"
-          >
-            Contact Me
-            <Mail size={18} />
-          </a>
-          <a
-            href={resumeUrl}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-slate-950 hover:bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-400 hover:text-slate-200 font-semibold px-6 py-3.5 rounded-xl transition-all duration-300 hover:-translate-y-0.5"
-          >
-            <Download size={18} />
-            Download Resume
-          </a>
-        </div>
-
-        {/* Social Icons */}
-        <div className="flex items-center justify-center gap-6 text-slate-500">
-          <a
-            href={github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-white transition-colors duration-300 hover:scale-110"
-            aria-label="GitHub Profile"
-          >
-            <Github size={24} />
-          </a>
-          <a
-            href={linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-white transition-colors duration-300 hover:scale-110"
-            aria-label="LinkedIn Profile"
-          >
-            <Linkedin size={24} />
-          </a>
-        </div>
-      </div>
-
-      {/* Down Arrow / Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-1.5 text-slate-500 animate-bounce">
-        <span className="text-xs tracking-widest uppercase">Scroll Down</span>
-        <div className="w-1 h-3 rounded-full bg-slate-500" />
       </div>
     </section>
   );
